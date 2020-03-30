@@ -26,9 +26,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: .cache
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**') }}-${{ hashFiles('example/**') }}
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('src/**') }}-${{ hashFiles('example/**') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-build-
 
       - name: Build
         run: npm run build:example
