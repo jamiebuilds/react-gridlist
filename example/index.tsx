@@ -4,6 +4,9 @@ import { render } from "react-dom"
 import GitHubButton from "react-github-btn"
 import GridList from "../src/GridList"
 
+import ResizeObserver from "resize-observer-polyfill"
+;(window as any).ResizeObserver = ResizeObserver
+
 interface Image {
 	url: string
 	width: number
