@@ -1,0 +1,57 @@
+{
+  "name": "react-gridlist",
+  "version": "0.0.0",
+  "description": "A virtual-scrolling GridList component based on CSS Grids.",
+  "author": "Jamie Kyle <me@thejameskyle.com>",
+  "license": "MIT",
+  "repository": "jamiebuilds/react-gridlist",
+  "source": "src/GridList.tsx",
+  "main": "dist/GridList.js",
+  "module": "dist/GridList.module.js",
+  "unpkg": "dist/GridList.umd.js",
+  "keywords": [
+    "react",
+    "grid",
+    "table",
+    "list",
+    "listview",
+    "virtual",
+    "scroll",
+    "scrolling",
+    "scrollable",
+    "window",
+    "windowing",
+    "columns",
+    "rows",
+    "image",
+    "content",
+    "css",
+    "typescript",
+    "ts",
+    "type",
+    "types"
+  ],
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "rm -rf dist && microbundle --tsconfig tsconfig.build.json --external react,resize-observer-polyfill --globals resize-observer-polyfill=ResizeObserver --name GridList",
+    "build:example": "rm -rf example-dist && parcel build example/index.html -d example-dist",
+    "start": "rm -rf example-dist && parcel example/index.html -d example-dist"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.27",
+    "@types/react-dom": "^16.9.5",
+    "emotion": "^10.0.27",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.10",
+    "microbundle": "^0.11.0",
+    "parcel": "^1.12.4",
+    "prettier": "^2.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-github-btn": "^1.1.1",
+    "typescript": "^3.8.3"
+  }
+}
