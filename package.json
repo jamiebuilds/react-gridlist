@@ -34,7 +34,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.build.json --external react,resize-observer-polyfill --globals resize-observer-polyfill=ResizeObserver --name GridList",
-    "build:example": "rm -rf example-dist && parcel build example/index.html -d example-dist",
+    "build:example": "rm -rf example-dist && parcel build example/index.html -d example-dist --public-url ./",
     "start": "rm -rf example-dist && parcel example/index.html -d example-dist",
     "prepublishOnly": "npm run -s build"
   },
