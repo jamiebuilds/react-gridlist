@@ -69,7 +69,7 @@ const IMAGES = Array.from({ length: 80 }, (_, index) => {
 	let width = 300
 	let height = random(200, 300)
 	return {
-		url: `https://i.picsum.photos/id/${index + 1}/${width}/${height}.jpg`,
+		url: `https://picsum.photos/id/${index + 1}/${width}/${height}.jpg`,
 		width,
 		height,
 	}
