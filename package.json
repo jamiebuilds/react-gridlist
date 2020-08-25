@@ -36,7 +36,9 @@
     "build": "rm -rf dist && microbundle --tsconfig tsconfig.build.json --external react,resize-observer-polyfill --globals resize-observer-polyfill=ResizeObserver --name GridList",
     "build:example": "rm -rf example-dist && parcel build example/index.html -d example-dist --public-url ./",
     "start": "rm -rf example-dist && parcel example/index.html -d example-dist",
-    "prepublishOnly": "npm run -s build"
+    "prepublishOnly": "npm run -s build",
+    "build:example-fixed-width": "rm -rf example-fixed-width-dist && parcel build example-fixed-width/index.html -d example-fixed-width-dist --public-url ./",
+    "start-fixed-width": "rm -rf example-fixed-width-dist && parcel example-fixed-width/index.html -d example-fixed-width-dist"
   },
   "peerDependencies": {
     "react": "^16.13.1"
