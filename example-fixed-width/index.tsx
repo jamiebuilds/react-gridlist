@@ -31,13 +31,10 @@ function getWindowMargin(windowHeight: number) {
 	return Math.round(windowHeight * 1.5)
 }
 
-function getItemData(image: Image, columnWidth: number) {
-	let imageRatio = image.height / image.width
-	let adjustedHeight = Math.round(columnWidth * imageRatio)
-
+function getItemData(image: Image) {
 	return {
 		key: image.url,
-		height: adjustedHeight,
+		height: image.height,
 	}
 }
 
@@ -54,7 +51,7 @@ function ImageGridList(props: { images: Image[] }) {
 				return (
 					<img
 						src={image.url}
-						width={image.width}
+						width={ITEM_WIDTH}
 						height={image.height}
 						className={styles.image}
 					/>
