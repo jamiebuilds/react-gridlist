@@ -463,6 +463,7 @@ export interface GridListProps<P> {
 	getColumnCount: (elementWidth: number) => number
 	getItemData: (item: P, columnWidth: number) => GridListItemData
 	renderItem: (item: P) => React.ReactNode
+	fixedItemSize?: number
 }
 
 export default function GridList<P>(props: GridListProps<P>) {
@@ -477,6 +478,8 @@ export default function GridList<P>(props: GridListProps<P>) {
 		ref,
 		`${configData !== null ? configData.windowMargin : 0}px`,
 	)
+
+	const colWidth = props.fixedItemSize ? `${props.fixedItemSize}px` : '1fr';
 
 	return (
 		<div
@@ -496,7 +499,7 @@ export default function GridList<P>(props: GridListProps<P>) {
 						display: "grid",
 						gridTemplateColumns:
 							configData !== null
-								? `repeat(${configData.columnCount}, 1fr)`
+								? `repeat(${configData.columnCount}, ${colWidth})`
 								: undefined,
 						gridGap: configData ? configData.gridGap : undefined,
 						alignItems: "center",
