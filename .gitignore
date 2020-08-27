@@ -4,4 +4,3 @@ node_modules
 dist
 .cache
 example-dist
-example-fixed-width-dist
