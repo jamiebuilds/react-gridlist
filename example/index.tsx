@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import { css } from "emotion"
 import { render } from "react-dom"
 import GitHubButton from "react-github-btn"
@@ -7,7 +7,7 @@ import GridList from "../src/GridList"
 import ResizeObserver from "resize-observer-polyfill"
 ;(window as any).ResizeObserver = ResizeObserver
 
-const ITEM_WIDTH = 300;
+const ITEM_WIDTH = 300
 
 interface Image {
 	url: string
@@ -23,8 +23,8 @@ function getGridGap(elementWidth: number, windowHeight: number) {
 	}
 }
 
-function getColumnCount(elementWidth: number) {
-	return Math.floor(elementWidth / ITEM_WIDTH)
+function getColumnCount(elementWidth: number, gridGap: number) {
+	return Math.floor((elementWidth + gridGap) / (ITEM_WIDTH + gridGap))
 }
 
 function getWindowMargin(windowHeight: number) {
@@ -48,7 +48,7 @@ function getFixedItemData(image: Image) {
 	}
 }
 
-function ImageGridList(props: { images: Image[], fixed: boolean }) {
+function ImageGridList(props: { images: Image[]; fixed: boolean }) {
 	return (
 		<GridList
 			items={props.images}
@@ -153,45 +153,52 @@ let styles = {
 }
 
 const App = () => {
-	const [fixed, setFixed] = useState(false);
+	const [fixed, setFixed] = useState(false)
 
-	return (<>
-		<div className={styles.header}>
-			<a
-				href="https://github.com/jamiebuilds/react-gridlist"
-				className={styles.headerLink}
-			>
-				<div className={styles.circle}>
-					<h1 className={styles.title}>{"React <GridList/>"}</h1>
-					<GitHubButton
-						href="https://github.com/jamiebuilds/react-gridlist"
-						data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-						data-size="large"
-						data-show-count={true}
-						aria-label="Star jamiebuilds/react-gridlist on GitHub"
-					>
-						Star
-					</GitHubButton>
-				</div>
-			</a>
-		</div>
+	return (
+		<>
+			<div className={styles.header}>
+				<a
+					href="https://github.com/jamiebuilds/react-gridlist"
+					className={styles.headerLink}
+				>
+					<div className={styles.circle}>
+						<h1 className={styles.title}>{"React <GridList/>"}</h1>
+						<GitHubButton
+							href="https://github.com/jamiebuilds/react-gridlist"
+							data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+							data-size="large"
+							data-show-count={true}
+							aria-label="Star jamiebuilds/react-gridlist on GitHub"
+						>
+							Star
+						</GitHubButton>
+					</div>
+				</a>
+			</div>
 
-		<div className={styles.switch}>
-			<button className={styles.btn} style={{opacity: fixed ? 0.5 : 1}} onClick={() => setFixed(false)}>
-				Variable width
-			</button>
-			<button className={styles.btn} style={{opacity: fixed ? 1: 0.5}} onClick={() => setFixed(true)}>
-				Fixed width
-			</button>
-		</div>
+			<div className={styles.switch}>
+				<button
+					className={styles.btn}
+					style={{ opacity: fixed ? 0.5 : 1 }}
+					onClick={() => setFixed(false)}
+				>
+					Variable width
+				</button>
+				<button
+					className={styles.btn}
+					style={{ opacity: fixed ? 1 : 0.5 }}
+					onClick={() => setFixed(true)}
+				>
+					Fixed width
+				</button>
+			</div>
 
-		<ImageGridList images={IMAGES} fixed={fixed} />
-		<h1 className={styles.heading}>Look ma, more grid...</h1>
-		<ImageGridList images={IMAGES} fixed={fixed} />
-	</>)
+			<ImageGridList images={IMAGES} fixed={fixed} />
+			<h1 className={styles.heading}>Look ma, more grid...</h1>
+			<ImageGridList images={IMAGES} fixed={fixed} />
+		</>
+	)
 }
 
-render(
-	<App />,
-	document.getElementById("root"),
-)
+render(<App />, document.getElementById("root"))

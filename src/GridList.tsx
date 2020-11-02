@@ -329,8 +329,9 @@ function useGridListConfigData<P>(
 
 	let columnCount = useMemo(() => {
 		if (elementWidth === null) return null
-		return getColumnCount(elementWidth)
-	}, [getColumnCount, elementWidth])
+		if (gridGap === null) return null
+		return getColumnCount(elementWidth, gridGap)
+	}, [getColumnCount, elementWidth, gridGap])
 
 	let columnWidth = getColumnWidth(columnCount, gridGap, elementWidth)
 
@@ -479,7 +480,7 @@ export default function GridList<P>(props: GridListProps<P>) {
 		`${configData !== null ? configData.windowMargin : 0}px`,
 	)
 
-	const colWidth = props.fixedItemSize ? `${props.fixedItemSize}px` : '1fr';
+	const colWidth = props.fixedItemSize ? `${props.fixedItemSize}px` : "1fr"
 
 	return (
 		<div
@@ -502,6 +503,7 @@ export default function GridList<P>(props: GridListProps<P>) {
 								? `repeat(${configData.columnCount}, ${colWidth})`
 								: undefined,
 						gridGap: configData ? configData.gridGap : undefined,
+						justifyContent: "center",
 						alignItems: "center",
 					}}
 				>
