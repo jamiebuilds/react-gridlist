@@ -56,7 +56,7 @@ function ImageGridList(props: { images: Image[]; fixed: boolean }) {
 			getColumnCount={getColumnCount}
 			getWindowMargin={getWindowMargin}
 			getItemData={props.fixed ? getFixedItemData : getItemData}
-			fixedItemSize={props.fixed ? ITEM_WIDTH : null}
+			fixedColumnWidth={props.fixed ? ITEM_WIDTH : null}
 			renderItem={(image) => {
 				return (
 					<img
