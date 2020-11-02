@@ -1,6 +1,6 @@
 {
   "name": "react-gridlist",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A virtual-scrolling GridList component based on CSS Grids.",
   "author": "Jamie Kyle <me@thejameskyle.com>",
   "license": "MIT",
