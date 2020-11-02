@@ -329,8 +329,9 @@ function useGridListConfigData<P>(
 
 	let columnCount = useMemo(() => {
 		if (elementWidth === null) return null
-		return getColumnCount(elementWidth)
-	}, [getColumnCount, elementWidth])
+		if (gridGap === null) return null
+		return getColumnCount(elementWidth, gridGap)
+	}, [getColumnCount, elementWidth, gridGap])
 
 	let columnWidth = getColumnWidth(columnCount, gridGap, elementWidth)
 
@@ -463,6 +464,7 @@ export interface GridListProps<P> {
 	getColumnCount: (elementWidth: number) => number
 	getItemData: (item: P, columnWidth: number) => GridListItemData
 	renderItem: (item: P) => React.ReactNode
+	fixedColumnWidth?: number
 }
 
 export default function GridList<P>(props: GridListProps<P>) {
@@ -477,6 +479,10 @@ export default function GridList<P>(props: GridListProps<P>) {
 		ref,
 		`${configData !== null ? configData.windowMargin : 0}px`,
 	)
+
+	const colWidth = props.fixedColumnWidth
+		? `${props.fixedColumnWidth}px`
+		: "1fr"
 
 	return (
 		<div
@@ -496,9 +502,10 @@ export default function GridList<P>(props: GridListProps<P>) {
 						display: "grid",
 						gridTemplateColumns:
 							configData !== null
-								? `repeat(${configData.columnCount}, 1fr)`
+								? `repeat(${configData.columnCount}, ${colWidth})`
 								: undefined,
 						gridGap: configData ? configData.gridGap : undefined,
+						justifyContent: "center",
 						alignItems: "center",
 					}}
 				>

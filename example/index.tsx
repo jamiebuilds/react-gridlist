@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { css } from "emotion"
 import { render } from "react-dom"
 import GitHubButton from "react-github-btn"
@@ -6,6 +6,8 @@ import GridList from "../src/GridList"
 
 import ResizeObserver from "resize-observer-polyfill"
 ;(window as any).ResizeObserver = ResizeObserver
+
+const ITEM_WIDTH = 300
 
 interface Image {
 	url: string
@@ -21,8 +23,8 @@ function getGridGap(elementWidth: number, windowHeight: number) {
 	}
 }
 
-function getColumnCount(elementWidth: number) {
-	return Math.floor(elementWidth / 300)
+function getColumnCount(elementWidth: number, gridGap: number) {
+	return Math.floor((elementWidth + gridGap) / (ITEM_WIDTH + gridGap))
 }
 
 function getWindowMargin(windowHeight: number) {
@@ -39,14 +41,22 @@ function getItemData(image: Image, columnWidth: number) {
 	}
 }
 
-function ImageGridList(props: { images: Image[] }) {
+function getFixedItemData(image: Image) {
+	return {
+		key: image.url,
+		height: image.height,
+	}
+}
+
+function ImageGridList(props: { images: Image[]; fixed: boolean }) {
 	return (
 		<GridList
 			items={props.images}
 			getGridGap={getGridGap}
 			getColumnCount={getColumnCount}
 			getWindowMargin={getWindowMargin}
-			getItemData={getItemData}
+			getItemData={props.fixed ? getFixedItemData : getItemData}
+			fixedColumnWidth={props.fixed ? ITEM_WIDTH : null}
 			renderItem={(image) => {
 				return (
 					<img
@@ -101,13 +111,28 @@ let styles = {
 		background: hsl(265, 100%, 50%);
 		flex-direction: column;
 	`,
+	switch: css`
+		display: flex;
+		justify-content: center;
+		padding-bottom: 60px;
+	`,
+	btn: css`
+		background: hsl(265, 100%, 50%);
+		font-family: inherit;
+		border: 0;
+		color: white;
+		font-weight: bold;
+		font-size: 20px;
+		padding: 15px 25px;
+		cursor: pointer;
+		opacity: 0.5;
+	`,
 	heading: css`
 		margin: 100px 0;
 		font-size: 10vw;
 		font-weight: 900;
 		line-height: 1.1;
 	`,
-
 	image: css`
 		position: relative;
 		width: 100%;
@@ -127,30 +152,53 @@ let styles = {
 	`,
 }
 
-render(
-	<>
-		<div className={styles.header}>
-			<a
-				href="https://github.com/jamiebuilds/react-gridlist"
-				className={styles.headerLink}
-			>
-				<div className={styles.circle}>
-					<h1 className={styles.title}>{"React <GridList/>"}</h1>
-					<GitHubButton
-						href="https://github.com/jamiebuilds/react-gridlist"
-						data-color-scheme="no-preference: dark; light: dark; dark: dark;"
-						data-size="large"
-						data-show-count={true}
-						aria-label="Star jamiebuilds/react-gridlist on GitHub"
-					>
-						Star
-					</GitHubButton>
-				</div>
-			</a>
-		</div>
-		<ImageGridList images={IMAGES} />
-		<h1 className={styles.heading}>Look ma, more grid...</h1>
-		<ImageGridList images={IMAGES} />
-	</>,
-	document.getElementById("root"),
-)
+const App = () => {
+	const [fixed, setFixed] = useState(false)
+
+	return (
+		<>
+			<div className={styles.header}>
+				<a
+					href="https://github.com/jamiebuilds/react-gridlist"
+					className={styles.headerLink}
+				>
+					<div className={styles.circle}>
+						<h1 className={styles.title}>{"React <GridList/>"}</h1>
+						<GitHubButton
+							href="https://github.com/jamiebuilds/react-gridlist"
+							data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+							data-size="large"
+							data-show-count={true}
+							aria-label="Star jamiebuilds/react-gridlist on GitHub"
+						>
+							Star
+						</GitHubButton>
+					</div>
+				</a>
+			</div>
+
+			<div className={styles.switch}>
+				<button
+					className={styles.btn}
+					style={{ opacity: fixed ? 0.5 : 1 }}
+					onClick={() => setFixed(false)}
+				>
+					Variable width
+				</button>
+				<button
+					className={styles.btn}
+					style={{ opacity: fixed ? 1 : 0.5 }}
+					onClick={() => setFixed(true)}
+				>
+					Fixed width
+				</button>
+			</div>
+
+			<ImageGridList images={IMAGES} fixed={fixed} />
+			<h1 className={styles.heading}>Look ma, more grid...</h1>
+			<ImageGridList images={IMAGES} fixed={fixed} />
+		</>
+	)
+}
+
+render(<App />, document.getElementById("root"))
