@@ -28,8 +28,8 @@ function getGridGap(elementWidth: number, windowHeight: number) {
   }
 }
 
-function getColumnCount(elementWidth: number) {
-  return Math.floor(elementWidth / 300)
+function getColumnCount(elementWidth: number, gridGap: number) {
+  return Math.floor((elementWidth + gridGap) / (300 + gridGap))
 }
 
 function getWindowMargin(windowHeight: number) {

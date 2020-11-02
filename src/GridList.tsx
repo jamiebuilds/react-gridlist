@@ -461,7 +461,7 @@ export interface GridListProps<P> {
 	items: P[]
 	getGridGap?: (elementWidth: number, windowHeight: number) => number
 	getWindowMargin?: (windowHeight: number) => number
-	getColumnCount: (elementWidth: number) => number
+	getColumnCount: (elementWidth: number, gridGap: number) => number
 	getItemData: (item: P, columnWidth: number) => GridListItemData
 	renderItem: (item: P) => React.ReactNode
 	fixedColumnWidth?: number
